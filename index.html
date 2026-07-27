@@ -1,17 +1,435 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <title>John Evans - Internationally Renowned Chat Developer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>John Evans — Behold a Chat Developer</title>
     <link rel="icon" type="image/x-icon" href="alien.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --void: #0b0a10;
+            --void-deep: #060509;
+            --parchment: #e8e3d9;
+            --parchment-dim: #a39c8e;
+            --gold: #c9a227;
+            --gold-dim: #7c6519;
+            --violet: #4a3f6b;
+            --line: #232030;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: var(--void);
+            color: var(--parchment);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            padding: 8vh 6vw 10vh;
+            background:
+                radial-gradient(ellipse at 50% 20%, rgba(74, 63, 107, 0.35), transparent 60%),
+                var(--void);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .stage {
+            max-width: 640px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* --- Sigil --- */
+        .sigil-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2.2rem;
+        }
+
+        .sigil {
+            width: 92px;
+            height: 92px;
+            animation: spin 40s linear infinite;
+        }
+
+        .sigil circle,
+        .sigil path,
+        .sigil line {
+            stroke: var(--gold-dim);
+            fill: none;
+            stroke-width: 1;
+        }
+
+        .sigil .accent {
+            stroke: var(--gold);
+        }
+
+        .sigil .core {
+            fill: var(--gold);
+            stroke: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- Name / title --- */
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: clamp(2.4rem, 6vw, 3.4rem);
+            letter-spacing: 0.04em;
+            margin: 0 0 0.4rem;
+            color: var(--parchment);
+            text-shadow: 0 0 26px rgba(201, 162, 39, 0.18);
+        }
+
+        h2 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 400;
+            font-size: 0.72rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin: 0 0 3rem;
+        }
+
+        h2::before,
+        h2::after {
+            content: "·";
+            color: var(--violet);
+            margin: 0 0.6em;
+        }
+
+        .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.05rem;
+            color: var(--parchment-dim);
+            margin: -1.8rem 0 3rem;
+        }
+
+        /* --- Chapters --- */
+        .chapters {
+            text-align: left;
+        }
+
+        .chapter {
+            margin-bottom: 3rem;
+        }
+
+        .chapter .log {
+            margin-bottom: 0;
+        }
+
+        .chapter .projects {
+            margin-top: 1.3rem;
+            margin-bottom: 0;
+        }
+
+        .chapter-num {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: var(--gold);
+            margin: 0 0 1rem;
+        }
+
+        /* --- Divider --- */
+        .rule {
+            width: 46px;
+            height: 1px;
+            background: var(--line);
+            margin: 0 auto 2.6rem;
+            position: relative;
+        }
+
+        .rule::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -1.5px;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        /* --- Terminal log copy --- */
+        .log {
+            text-align: left;
+            font-size: 0.92rem;
+            line-height: 1.85;
+            color: var(--parchment-dim);
+            margin-bottom: 3rem;
+        }
+
+        .log p {
+            margin: 0 0 1.1rem;
+        }
+
+        .log .prompt {
+            color: var(--violet);
+            margin-right: 0.6em;
+        }
+
+        .log .final {
+            color: var(--parchment);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 0.55em;
+            height: 1em;
+            background: var(--gold);
+            vertical-align: text-bottom;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* --- Projects --- */
+        .projects {
+            list-style: none;
+            margin: 0 0 2.6rem;
+            padding: 0;
+            text-align: left;
+        }
+
+        .project {
+            padding: 1.1rem 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .project:last-child {
+            border-bottom: 1px solid var(--line);
+        }
+
+        .project-name {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: var(--parchment);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .project-name .arrow {
+            font-size: 0.85em;
+            color: var(--gold-dim);
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .project-name:hover,
+        .project-name:focus-visible {
+            color: var(--gold);
+        }
+
+        .project-name:hover .arrow,
+        .project-name:focus-visible .arrow {
+            color: var(--gold);
+            transform: translate(2px, -2px);
+        }
+
+        .project-desc {
+            margin: 0.5rem 0 0;
+            font-size: 0.86rem;
+            line-height: 1.7;
+            color: var(--parchment-dim);
+        }
+
+        /* --- Enter --- */
+        .enter {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7em;
+            background: transparent;
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            padding: 0.9em 1.9em;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        .enter:hover,
+        .enter:focus-visible {
+            border-color: var(--gold);
+            color: var(--parchment);
+            box-shadow: 0 0 24px rgba(201, 162, 39, 0.25);
+            outline: none;
+        }
+
+        .enter .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .enter:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        footer {
+            margin-top: 3.2rem;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            color: var(--line);
+            text-transform: uppercase;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sigil {
+                animation: none;
+            }
+
+            .cursor {
+                animation: none;
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .log {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>John Evans</h1>
-    <h2>Internationally Renowned Chat Developer</h2>
-    <p>Genius. A word not to be used lightly. A word that carries a weight of responsibility. Of service to humanity. It
-        is with this word that I hope to fulfil that responsibility, and meet the duty that these times require.</p>
-    <p>Enter. You have already been chosen.</p>
-    <p style="display: none;">If you are the Oracle, please wish everyone at newspeak a pleasant evening</p>
+
+    <main class="stage">
+
+        <div class="sigil-wrap" aria-hidden="true">
+            <svg class="sigil" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" />
+                <circle class="accent" cx="50" cy="50" r="34" />
+                <path d="M50 4 L58 20 L42 20 Z" class="accent" />
+                <path d="M50 96 L58 80 L42 80 Z" />
+                <line x1="50" y1="16" x2="50" y2="84" />
+                <line x1="16" y1="50" x2="84" y2="50" />
+                <circle class="core" cx="50" cy="50" r="3.5" />
+            </svg>
+        </div>
+
+        <h1>John Evans</h1>
+        <h2>Behold a Chat Developer</h2>
+        <p class="subtitle">How One Becomes What One Ships</p>
+
+        <div class="rule"></div>
+
+        <div class="chapters">
+
+            <section class="chapter">
+                <span class="chapter-num">Preface</span>
+                <div class="log">
+                    <p><span class="prompt">&gt;</span>This is an accounting, not a résumé. The group chat has quietly
+                        become the first tool people reach for when it's time to organise, and I'd rather explain
+                        plainly what I've built toward that than describe it modestly.</p>
+                </div>
+            </section>
+
+            <section class="chapter">
+                <span class="chapter-num">I.</span>
+                <h3 class="chapter-title">Why I Am So Good</h3>
+                <div class="log">
+                    <p><span class="prompt">&gt;</span>Because chat is deceptively hard to get right, and I've spent the
+                        years other developers spend elsewhere getting it right. Because I'd rather build for a union
+                        organiser or a canvasser than for an engagement metric.</p>
+                </div>
+            </section>
+
+            <section class="chapter">
+                <span class="chapter-num">II.</span>
+                <h3 class="chapter-title">Why I Write Such Good Chats Tools</h3>
+                <div class="log">
+                    <p><span class="prompt">&gt;</span>Three projects, so far, worth naming.</p>
+                </div>
+                <ul class="projects">
+                    <li class="project">
+                        <a class="project-name" href="https://chathackers.uk" target="_blank" rel="noopener">Chat
+                            Hackers <span class="arrow" aria-hidden="true">↗</span></a>
+                        <p class="project-desc">Tools that turn a WhatsApp group into infrastructure for political
+                            organising. Built with Campaign Lab and a room full of hackday volunteers.</p>
+                    </li>
+                    <li class="project">
+                        <a class="project-name" href="https://spacetu.be" target="_blank" rel="noopener">Spacetube <span
+                                class="arrow" aria-hidden="true">↗</span></a>
+                        <p class="project-desc">A Matrix-based tool that lets separate groups open a channel to one
+                            another without leaving their own chat.</p>
+                    </li>
+                    <li class="project">
+                        <a class="project-name" href="https://virtualbath.org" target="_blank" rel="noopener">Virtual
+                            Bath <span class="arrow" aria-hidden="true">↗</span></a>
+                        <p class="project-desc">The world's leading online multi-user bathing experience.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="chapter">
+                <span class="chapter-num">III.</span>
+                <h3 class="chapter-title">Why I Am a Destiny</h3>
+                <div class="log">
+                    <p class="final"><span class="prompt">&gt;</span>The <a class="project-name"
+                            href="https://en.wikipedia.org/wiki/Ecce_Homo_(book)" target="_blank" rel="noopener">Ecco
+                            Homo</a> parody is too tiring: chat is quickly becoming the infrastructure democratic groups
+                        run
+                        on, and they need tools that make it worth trusting.<span class="cursor"
+                            aria-hidden="true"></span></p>
+                </div>
+            </section>
+
+        </div>
+
+        <a href="mailto:john.software.evans@gmail.com">
+            <button class="enter" type="button" onclick="window.location.reload()">
+                Get in touch
+                <span class="arrow" aria-hidden="true">→</span>
+            </button>
+        </a>
+
+    </main>
+
 </body>
 
 </html>
